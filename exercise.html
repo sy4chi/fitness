@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- COOP/COEP Service Worker for GitHub Pages high-speed WASM multithreading -->
-    <title>FITNESS | AI 운동 자세 코치</title>
+    <title>AI PT Studio — Premium Real-Time Edge AI Tracker</title>
     <!-- Google Fonts: Outfit & Noto Sans KR -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -835,423 +835,6 @@
             color: #cc7a00;
             line-height: 1.4;
         }
-
-
-        /* FITNESS home-matched interface refresh: no gradient, keep model/preprocess JS untouched */
-        :root {
-            --bg-base: #061f24;
-            --bg-surface: rgba(255,255,255,0.12);
-            --border-color: rgba(255,255,255,0.18);
-            --primary: #d7ff63;
-            --primary-glow: rgba(215,255,99,0.22);
-            --accent-cyan: #d7ff63;
-            --accent-emerald: #d7ff63;
-            --accent-rose: #ff5d55;
-            --text-main: #ffffff;
-            --text-muted: rgba(255,255,255,0.72);
-        }
-        body {
-            background: #061f24;
-            color: #fff;
-        }
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: url("assets/hero-fitness.jpg") center / cover no-repeat;
-            opacity: .22;
-            filter: blur(4px);
-            transform: scale(1.03);
-            z-index: 0;
-            pointer-events: none;
-        }
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: rgba(1,22,26,.72);
-            z-index: 0;
-            pointer-events: none;
-        }
-        #fitness-auth-bar {
-            top: 18px !important;
-            right: 24px !important;
-            background: rgba(255,255,255,.10) !important;
-            border: 1px solid rgba(255,255,255,.18) !important;
-            color: #fff !important;
-            border-radius: 999px !important;
-            padding: 9px 12px !important;
-        }
-        #fitness-login-open, #fitness-logout-btn {
-            border-radius: 999px !important;
-            background: rgba(255,255,255,.12) !important;
-            border-color: rgba(255,255,255,.22) !important;
-        }
-        header {
-            background: rgba(255,255,255,.08);
-            border-bottom: 1px solid rgba(255,255,255,.16);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 22px clamp(18px, 4vw, 48px);
-        }
-        h1 {
-            color: #fff;
-            font-size: clamp(1.05rem, 2vw, 1.55rem);
-            font-weight: 900;
-            letter-spacing: -.04em;
-        }
-        .status-pill, .overlay-badge {
-            background: rgba(255,255,255,.12);
-            border: 1px solid rgba(255,255,255,.18);
-            color: rgba(255,255,255,.86);
-            box-shadow: none;
-        }
-        main {
-            max-width: 1480px;
-            padding: 34px clamp(16px, 4vw, 48px);
-            gap: 22px;
-            grid-template-columns: minmax(0, 1.25fr) minmax(360px, .75fr);
-        }
-        .workspace-panel, .glass-card {
-            background: rgba(255,255,255,.11);
-            border: 1px solid rgba(255,255,255,.18);
-            border-radius: 28px;
-            box-shadow: 0 24px 60px rgba(0,0,0,.18);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-        }
-        .workspace-panel { padding: clamp(14px, 2vw, 24px); }
-        .camera-wrapper {
-            background: rgba(2, 18, 22, .86);
-            border: 1px solid rgba(255,255,255,.2);
-            border-radius: 24px;
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
-        }
-        canvas#canvas-stream {
-            background: rgba(2,18,22,.76);
-        }
-        .overlay-state-badge.state-ready { background: rgba(255,255,255,.14); color:#fff; }
-        .state-down, .selector-btn.active, .btn-primary, .progress-bar-fill {
-            background: #d7ff63 !important;
-            color: #071a1d !important;
-            border-color: rgba(215,255,99,.9) !important;
-            box-shadow: 0 14px 32px rgba(0,0,0,.16) !important;
-        }
-        .camera-guide-box {
-            background: rgba(215,255,99,.13);
-            border: 1px solid rgba(215,255,99,.28);
-            color: #e6ffad;
-        }
-        .panel-title {
-            color: rgba(255,255,255,.72);
-            font-weight: 900;
-            letter-spacing: .08em;
-        }
-        .selector-btn, .summary-card, .feedback-bubble, .btn, .metric-bar-bg {
-            background: rgba(255,255,255,.10);
-            border: 1px solid rgba(255,255,255,.14);
-            color: rgba(255,255,255,.82);
-        }
-        .selector-btn:hover, .btn:hover { background: rgba(255,255,255,.16); color: #fff; }
-        .gauge-val, .metric-value, .summary-val, .feedback-bubble { color: #fff; }
-        .gauge-lbl, .metric-label, .summary-lbl, .sound-controller { color: rgba(255,255,255,.68); }
-        .gauge-bg { stroke: rgba(255,255,255,.16); }
-        .gauge-progress { stroke: #d7ff63; }
-        .fill-accuracy, .fill-stability { background: #d7ff63; }
-        .feedback-bubble {
-            border-left: 4px solid #d7ff63;
-            border-radius: 18px;
-            min-height: 60px;
-            font-weight: 800;
-        }
-        .badge-good {
-            background: rgba(215,255,99,.14);
-            border-color: rgba(215,255,99,.3);
-            color: #dfff8b;
-        }
-        .badge-bad {
-            background: rgba(255,93,85,.14);
-            border-color: rgba(255,93,85,.3);
-            color: #ffb3ae;
-        }
-        .toggle-slider { background: rgba(255,255,255,.22); }
-        input:checked+.toggle-slider { background: #d7ff63; }
-        #loader-overlay {
-            background: #061f24;
-            color: #fff;
-        }
-        #loader-overlay::before {
-            content:"";
-            position:absolute;
-            inset:0;
-            background: url("assets/hero-fitness.jpg") center / cover no-repeat;
-            opacity:.18;
-            filter: blur(4px);
-            transform: scale(1.03);
-        }
-        .loader-content {
-            position: relative;
-            z-index: 1;
-            background: rgba(255,255,255,.12);
-            border: 1px solid rgba(255,255,255,.18);
-            border-radius: 28px;
-            padding: 34px 24px;
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            box-shadow: 0 24px 60px rgba(0,0,0,.2);
-        }
-        .loader-title, .loader-subtitle, #loader-status-text { color: #fff; }
-        .loader-subtitle, #loader-status-text, .loader-cache-tip { color: rgba(255,255,255,.7); }
-        .progress-container { background: rgba(255,255,255,.18); }
-        #loader-percentage-text { color: #d7ff63; }
-        #start-btn {
-            background: #d7ff63 !important;
-            color: #071a1d !important;
-            border-radius: 999px !important;
-            font-weight: 900 !important;
-            box-shadow: 0 18px 40px rgba(0,0,0,.18) !important;
-        }
-        footer { border-top-color: rgba(255,255,255,.16); color: rgba(255,255,255,.55); }
-        @media (max-width: 1024px) {
-            main { grid-template-columns: 1fr; padding: 22px 18px; }
-            .controls-panel { gap: 16px; }
-        }
-        @media (max-width: 720px) {
-            body::before { opacity: .18; }
-            #fitness-auth-bar {
-                position: static !important;
-                margin: 10px 14px 0 auto;
-                width: max-content;
-                max-width: calc(100% - 28px);
-            }
-            header {
-                margin-top: 8px;
-                padding: 18px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            .status-pill { width: 100%; justify-content: center; }
-            main { padding: 16px 12px 24px; gap: 14px; }
-            .workspace-panel, .glass-card { border-radius: 22px; }
-            .camera-wrapper { aspect-ratio: 3 / 4; border-radius: 20px; }
-            .camera-overlay { inset: 12px; }
-            .overlay-bottom { flex-direction: column; align-items: stretch; gap: 10px; }
-            .camera-guide-box { max-width: 100%; font-size: .76rem; padding: 10px 12px; }
-            .sound-controller { align-items: flex-start; gap: 12px; }
-            .exercise-selectors { grid-template-columns: 1fr; }
-            .selector-btn { flex-direction: row; justify-content: center; padding: 14px; }
-            .analytics-grid { grid-template-columns: 1fr; }
-            .summary-grid { grid-template-columns: 1fr 1fr; }
-            .actions-row { flex-direction: column; gap: 10px; }
-            .loader-content { width: calc(100% - 28px); padding: 28px 18px; }
-        }
-
-
-        /* FITNESS 홈 화면과 톤을 맞춘 운동 화면 UI 오버라이드: 모델/전처리 로직과 무관한 시각 스타일만 변경 */
-        :root {
-            --bg-base: #061f24;
-            --bg-surface: rgba(255,255,255,.12);
-            --border-color: rgba(255,255,255,.18);
-            --primary: #d7ff63;
-            --primary-glow: rgba(215,255,99,.22);
-            --accent-cyan: #d7ff63;
-            --accent-emerald: #bfff6a;
-            --accent-emerald-glow: rgba(191,255,106,.22);
-            --accent-rose: #ff6b6b;
-            --accent-rose-glow: rgba(255,107,107,.18);
-            --text-main: #ffffff;
-            --text-muted: rgba(255,255,255,.72);
-        }
-        body {
-            background: #061f24;
-            color: #fff;
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-        }
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background: url("assets/hero-fitness.jpg") center/cover no-repeat;
-            filter: blur(3px);
-            transform: scale(1.03);
-            opacity: .58;
-        }
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background: rgba(1,22,26,.68);
-            backdrop-filter: blur(1.5px);
-        }
-        header {
-            background: rgba(255,255,255,.08) !important;
-            border-bottom: 1px solid rgba(255,255,255,.18) !important;
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-        }
-        .logo-section h1 {
-            color: #fff;
-            font-weight: 900;
-            letter-spacing: -.04em;
-        }
-        .logo-section h1::before {
-            content: "FITNESS";
-            display: block;
-            font-size: clamp(30px, 4vw, 46px);
-            line-height: .95;
-            letter-spacing: -.06em;
-        }
-        .logo-section h1 { font-size: 0 !important; }
-        .logo-section h1::after {
-            content: "AI TRAINER";
-            display: block;
-            margin-top: 7px;
-            font-size: 12px;
-            letter-spacing: .32em;
-            color: rgba(255,255,255,.82);
-        }
-        .status-pill,
-        #fitness-auth-bar {
-            background: rgba(255,255,255,.10) !important;
-            color: #fff !important;
-            border: 1px solid rgba(255,255,255,.22) !important;
-            box-shadow: none !important;
-        }
-        main {
-            width: min(1380px, calc(100% - 36px));
-            margin: 24px auto 36px;
-            display: grid;
-            grid-template-columns: minmax(0, 1.55fr) minmax(330px, .75fr);
-            gap: 18px;
-        }
-        .workspace-panel,
-        .controls-panel,
-        .glass-card,
-        .sound-controller,
-        .stat-card,
-        .feedback-card {
-            background: rgba(255,255,255,.12) !important;
-            border: 1px solid rgba(255,255,255,.20) !important;
-            box-shadow: 0 18px 48px rgba(0,0,0,.18) !important;
-            backdrop-filter: blur(18px) !important;
-            -webkit-backdrop-filter: blur(18px) !important;
-            color: #fff !important;
-        }
-        .camera-wrapper {
-            border-radius: 28px !important;
-            overflow: hidden;
-            background: rgba(0,0,0,.34) !important;
-            border: 1px solid rgba(255,255,255,.18) !important;
-            box-shadow: 0 24px 60px rgba(0,0,0,.28) !important;
-        }
-        .panel-title,
-        .metric-label,
-        .feedback-title,
-        .sound-controller span,
-        .camera-guide-box,
-        .selector-btn span,
-        .stat-card,
-        .glass-card { color: #fff !important; }
-        .selector-btn,
-        .control-btn,
-        #start-btn,
-        .primary-action,
-        button {
-            border-radius: 999px !important;
-        }
-        .selector-btn,
-        .control-btn {
-            background: rgba(255,255,255,.10) !important;
-            border: 1px solid rgba(255,255,255,.20) !important;
-            color: #fff !important;
-        }
-        .selector-btn.active,
-        .control-btn.primary,
-        #start-btn {
-            background: #d7ff63 !important;
-            border-color: rgba(215,255,99,.90) !important;
-            color: #071a1d !important;
-            font-weight: 900 !important;
-            box-shadow: 0 18px 40px rgba(0,0,0,.18) !important;
-        }
-        .progress-bar-fill,
-        .progress-fill,
-        .metric-fill {
-            background: #d7ff63 !important;
-            box-shadow: none !important;
-        }
-        #loader-overlay {
-            background: rgba(1,22,26,.88) !important;
-            backdrop-filter: blur(14px) !important;
-            -webkit-backdrop-filter: blur(14px) !important;
-        }
-        .loader-content {
-            background: rgba(255,255,255,.12) !important;
-            border: 1px solid rgba(255,255,255,.20) !important;
-            box-shadow: 0 24px 70px rgba(0,0,0,.32) !important;
-            color: #fff !important;
-        }
-        .loader-title {
-            color: #fff !important;
-            font-weight: 900 !important;
-            letter-spacing: -.04em;
-        }
-        .loader-title::before {
-            content: "FITNESS";
-            display: block;
-            font-size: clamp(36px, 8vw, 64px);
-            line-height: 1;
-        }
-        .loader-title { font-size: 0 !important; }
-        .loader-title::after {
-            content: "AI 운동 자세 코치";
-            display: block;
-            margin-top: 10px;
-            font-size: 16px;
-            letter-spacing: .02em;
-            color: rgba(255,255,255,.78);
-        }
-        .loader-subtitle,
-        .loader-cache-tip,
-        #loader-status-text,
-        #loader-percentage-text { color: rgba(255,255,255,.78) !important; }
-        .progress-container { background: rgba(255,255,255,.14) !important; }
-        @media (max-width: 900px) {
-            header {
-                padding: 18px 16px !important;
-                align-items: flex-start !important;
-                gap: 12px;
-            }
-            main {
-                width: calc(100% - 24px);
-                margin: 14px auto 28px;
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-            .workspace-panel,
-            .controls-panel,
-            .glass-card { border-radius: 22px !important; }
-            .camera-wrapper { border-radius: 22px !important; min-height: 54vh; }
-            .exercise-selectors,
-            .stats-grid,
-            .control-grid { grid-template-columns: 1fr !important; }
-            #fitness-auth-bar {
-                top: auto !important;
-                right: 12px !important;
-                bottom: 12px !important;
-                left: 12px !important;
-                justify-content: center;
-            }
-            .loader-content {
-                width: calc(100% - 28px) !important;
-                padding: 26px 18px !important;
-                border-radius: 24px !important;
-            }
-        }
-
     </style>
 
 <script>
@@ -1278,13 +861,13 @@
 <body>
 
 <!-- Camera Permission Fix Overlay -->
-<div id="camera-permission-fix" style="position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:100000; display:none; gap:10px; align-items:center; padding:12px 14px; border-radius:14px; background:rgba(0,0,0,.72); color:#fff; border:1px solid rgba(255,255,255,.25); backdrop-filter:blur(12px); box-shadow:0 18px 40px rgba(0,0,0,.35); font:700 14px system-ui;">
+<div id="camera-permission-fix" style="position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:100000; display:flex; gap:10px; align-items:center; padding:12px 14px; border-radius:14px; background:rgba(0,0,0,.72); color:#fff; border:1px solid rgba(255,255,255,.25); backdrop-filter:blur(12px); box-shadow:0 18px 40px rgba(0,0,0,.35); font:700 14px system-ui;">
   <span>카메라 권한이 필요합니다</span>
-  <button type="button" onclick="requestCameraPermissionOnly()" style="height:38px; padding:0 14px; border:0; border-radius:10px; background:#fff; color:#111; font-weight:900; cursor:pointer;">카메라 권한 허용</button>
+  <button type="button" onclick="requestCameraPermissionAndStart()" style="height:38px; padding:0 14px; border:0; border-radius:10px; background:#fff; color:#111; font-weight:900; cursor:pointer;">카메라 시작</button>
 </div>
 
 <script>
-async function requestCameraPermissionOnly() {
+async function requestCameraPermissionAndStart() {
   const box = document.getElementById("camera-permission-fix");
   try {
     // iOS는 getUserMedia await 이후 사용자 제스처가 끊길 수 있어서, 카메라 요청 전에 TTS를 먼저 깨운다.
@@ -1304,34 +887,42 @@ async function requestCameraPermissionOnly() {
     testStream.getTracks().forEach(track => track.stop());
 
     if (box) box.style.display = "none";
-    const statusText = document.getElementById("status-text");
-    if (statusText) statusText.innerText = "카메라 권한이 허용되었습니다. 시작 버튼을 눌러 운동을 시작하세요.";
+
+    // 원본 GRU 로딩 시작 버튼이 있으면 그 버튼을 눌러서 기존 기능 그대로 진입
     const startBtn = document.getElementById("start-btn");
-    if (startBtn) startBtn.style.display = "block";
-    // 중요: 권한 허용 후 자동 시작하지 않는다. 사용자가 반드시 시작 버튼을 눌러야 한다.
+    if (startBtn && typeof startBtn.click === "function" && startBtn.style.display !== "none") {
+      startBtn.click();
+      return;
+    }
+
+    // 원본 함수가 있으면 호출
+    if (typeof window.handleStartButton === "function") {
+      window.handleStartButton();
+      return;
+    }
+
+    // 혹시 원본 카메라 함수명이 따로 있으면 순서대로 시도
+    const candidates = ["startCamera", "initCamera", "startWebcam", "enableCam", "startWorkout"];
+    for (const name of candidates) {
+      if (typeof window[name] === "function") {
+        await window[name]();
+        return;
+      }
+    }
+
+    alert("카메라 권한은 허용됐지만 시작 함수를 찾지 못했습니다. 페이지를 새로고침 후 다시 눌러줘.");
   } catch (err) {
     console.error("[Camera Permission Error]", err);
     alert("카메라 권한 요청 실패: " + (err && err.message ? err.message : err));
   }
 }
 
-window.addEventListener("DOMContentLoaded", async function () {
+window.addEventListener("DOMContentLoaded", function () {
   const box = document.getElementById("camera-permission-fix");
   if (!box) return;
-  // 카메라는 시작 버튼에서 요청한다. 이미 허용된 경우 별도 권한 버튼은 보여주지 않는다.
-  box.style.display = "none";
-  try {
-    if (navigator.permissions && navigator.permissions.query) {
-      const status = await navigator.permissions.query({ name: "camera" });
-      if (status.state === "denied") {
-        box.style.display = "flex";
-        const span = box.querySelector("span");
-        if (span) span.textContent = "카메라 권한이 차단되어 있습니다";
-      }
-    }
-  } catch(e) {
-    box.style.display = "none";
-  }
+
+  // 이미 카메라 권한이 허용된 경우에도 사용자가 직접 시작할 수 있게 버튼은 남겨둔다.
+  // 단, 원본 시작 버튼이 보이면 중복으로 너무 거슬리지 않게 약간 아래에만 표시.
 });
 </script>
 
@@ -1946,10 +1537,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                 return;
             }
 
-            if (hasMp3Audio) {
-                // 실제 MP3 자체를 사용자 클릭 흐름에서 재생한다.
-                // iOS/Safari에서 무음 unlock 오디오가 실제 안내 음성을 막는 문제를 피한다.
-                mp3AudioUnlocked = true;
+            if (hasMp3Audio && isiOSDevice && !mp3AudioUnlocked) {
+                unlockMp3AudioForIOS();
             }
 
             if (!hasMp3Audio && isiOSDevice && !ttsUnlocked) {
@@ -2191,7 +1780,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 const nx = (point.x - cx) / scale;
                 const ny = (point.y - cy) / scale;
                 const nz = (point.z - cz) / scale;
-                coords.push(nx, ny, nz, point.visibility ?? 0);
+                coords.push(nx, ny, nz, point.visibility || 0);
             }
             return new Float32Array(coords);
         }
@@ -2517,7 +2106,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 
                 await loadONNXModel(activeExercise);
 
-                updateConnectionStatus('connected', '준비 완료. 시작 버튼을 누르면 카메라가 켜집니다.');
+                initCamera();
 
             } catch (err) {
                 console.error("Initialization failed:", err);
@@ -2596,8 +2185,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             label.innerText = text;
         }
 
-        window.initCamera = async function initCamera() {
-            if (isCameraActive && video && video.srcObject) return;
+        async function initCamera() {
             try {
                 // 모바일 기기의 경우 해상도를 더 낮춰 GPU/CPU 부하 감소
                 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -2629,9 +2217,8 @@ window.addEventListener("DOMContentLoaded", async function () {
             } catch (err) {
                 console.error("Webcam init failed:", err);
                 alert("카메라 권한을 얻을 수 없습니다. 브라우저 주소창 왼쪽의 카메라 차단 아이콘을 눌러 승인해주세요.");
-                throw err;
             }
-        };
+        }
 
         // --- Core Render Loop ---
         // MediaPipe는 매 프레임 실행 (타임스탬프 단조증가 필수)
@@ -2640,7 +2227,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         let fpsSamples = [];
         let lastMpTimestamp = 0; // MediaPipe 타임스탬프 단조증가 보장용
 
-        async function processFrameLoop() {
+        function processFrameLoop() {
             if (!isCameraActive || !video.videoWidth) {
                 requestAnimationFrame(processFrameLoop);
                 return;
@@ -2684,17 +2271,10 @@ window.addEventListener("DOMContentLoaded", async function () {
                         featureBuffer.push(feat);
                         if (featureBuffer.length > 30) featureBuffer.shift();
 
-                        // 2. ONNX 추론 — Python Classifier.predict() 흐름과 맞추기 위해
-                        // 30프레임 버퍼가 찬 뒤에는 가능한 매 프레임 최신 30프레임으로 추론한다.
-                        // 기존 6프레임 스로틀링은 로컬 Python 결과와 타이밍 차이를 만들 수 있어 제거했다.
+                        // 2. ONNX 추론 — fire-and-forget 비동기 (렌더 루프 블로킹 없음)
                         onnxFrameCounter++;
-                        // Python Classifier.predict()와 동일한 흐름:
-                        // - 매 프레임 feature_vector를 buffer에 append
-                        // - 30프레임 미만이면 Good 유지
-                        // - 30프레임부터는 최신 30프레임으로 즉시 추론
-                        // 브라우저에서도 결과 타이밍 차이를 줄이기 위해 추론을 await한다.
-                        if (featureBuffer.length === 30 && onnxSession) {
-                            await runOnnxInference();
+                        if (featureBuffer.length === 30 && onnxSession && !isOnnxRunning && onnxFrameCounter % 6 === 0) {
+                            runOnnxInference();
                         }
 
                         const poseLabel = cachedPoseLabel;
@@ -3166,42 +2746,19 @@ window.addEventListener("DOMContentLoaded", async function () {
             startPreloadingAssets();
         }
 
-        let workoutStartRequested = false;
-
-        // 시작 버튼 클릭 핸들러 — 사용자 제스처 안에서 MP3/TTS와 카메라를 직접 시작
-        window.handleStartButton = async function () {
-            if (workoutStartRequested) return;
-            workoutStartRequested = true;
-
-            const startBtn = document.getElementById("start-btn");
-            if (startBtn) {
-                startBtn.disabled = true;
-                startBtn.innerText = "시작 중...";
-            }
-
-            // iPad/iPhone/Safari 대응: 버튼 클릭 이벤트 안에서 MP3를 직접 재생한다.
-            // 큐나 setTimeout을 거치면 첫 안내 음성이 씹히는 경우가 있어 ready.mp3를 우선 재생한다.
-            try { unlockMp3AudioForIOS(); } catch(e) {}
-            const readyText = "준비 완료. 자세를 잡고 운동을 시작해볼게요.";
-            if (!playFeedbackAudioFile(readyText)) {
-                try { unlockTTSForIOS(); } catch(e) {}
-                speakTTS(readyText, true);
-            }
+        // 시작 버튼 클릭 핸들러 — 사용자 제스처 안에서 TTS 엔진 활성화
+        window.handleStartButton = function () {
+            // iPad/iPhone/Safari 대응: 사용자 버튼 클릭 순간에 TTS 엔진을 직접 unlock
+            unlockTTSForIOS();
 
             // 로딩 오버레이 제거
             const loader = document.getElementById("loader-overlay");
-            if (loader) loader.classList.add("fade-out");
+            loader.classList.add("fade-out");
 
-            // 카메라도 자동 권한 버튼이 아니라 시작 버튼을 눌렀을 때만 켠다.
-            try {
-                await window.initCamera();
-            } catch(e) {
-                workoutStartRequested = false;
-                if (startBtn) {
-                    startBtn.disabled = false;
-                    startBtn.innerText = "▶ 운동 시작하기";
-                }
-            }
+            // 인트로 안내 TTS
+            setTimeout(() => {
+                speakTTS("준비 완료. 자세를 잡고 운동을 시작해볼게요.", true);
+            }, 300);
         };
 
         if (document.readyState === 'loading') {
