@@ -6,11 +6,12 @@ html, body {
   margin: 0;
   width: 100%;
   min-height: 100%;
-  font-family: "Noto Sans KR", system-ui, sans-serif;
-  background: #000;
+  font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+  background: #061f24;
   color: #fff;
 }
 a { color: inherit; text-decoration: none; }
+button, input { font-family: inherit; }
 .browser-shell { min-height: 100vh; }
 .hero-card {
   position: relative;
@@ -23,109 +24,171 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   inset: 0;
   background: url("assets/hero-fitness.jpg") center / cover no-repeat;
-  transform: scale(1.04);
-  filter: blur(5px);
-  opacity: .9;
+  transform: scale(1.03);
+  filter: blur(3px);
+  opacity: .78;
 }
 .hero-card::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(0,20,24,.38), rgba(0,24,28,.34), rgba(0,24,28,.62)),
-    rgba(0,0,0,.18);
-  backdrop-filter: blur(2px);
+  background: rgba(1, 22, 26, .54);
+  backdrop-filter: blur(1.5px);
 }
 .topbar {
   position: relative;
   z-index: 2;
-  height: 112px;
-  padding: 34px 8vw 0;
+  min-height: 104px;
+  padding: 30px clamp(20px, 7vw, 96px) 0;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255,255,255,.24);
+  border-bottom: 1px solid rgba(255,255,255,.18);
 }
-.logo { display: flex; flex-direction: column; gap: 8px; line-height: .86; font-weight: 900; letter-spacing: -.06em; }
-.logo span { font-size: 42px; }
-.logo small { font-size: 13px; letter-spacing: .34em; }
-.header-actions { display: flex; align-items: center; gap: 12px; }
-.user-badge { color: rgba(255,255,255,.85); font-weight: 800; }
+.logo { display: flex; flex-direction: column; gap: 7px; line-height: .86; font-weight: 900; letter-spacing: -.06em; }
+.logo span { font-size: clamp(30px, 4vw, 46px); }
+.logo small { font-size: 12px; letter-spacing: .32em; color: rgba(255,255,255,.82); }
+.header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.user-badge { color: rgba(255,255,255,.84); font-weight: 900; }
 .auth-link, .secondary-btn {
-  border: 2px solid rgba(255,255,255,.9);
-  padding: 16px 34px;
-  font-size: 16px;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 999px;
+  padding: 13px 24px;
+  font-size: 15px;
   font-weight: 900;
-  background: rgba(255,255,255,.03);
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
 }
 .hero-copy {
   position: relative;
   z-index: 2;
-  min-height: calc(100vh - 112px);
+  min-height: calc(100vh - 104px);
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 0 24px 80px;
+  padding: 40px 20px 86px;
 }
-.hero-copy-inner { max-width: 900px; }
+.hero-copy-inner { max-width: 980px; }
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 16px;
+  margin-bottom: 22px;
+  border: 1px solid rgba(190, 255, 107, .46);
+  border-radius: 999px;
+  background: rgba(190, 255, 107, .12);
+  color: #dfff9b;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
 .hero-copy h1 {
   font-family: "Black Han Sans", "Noto Sans KR", sans-serif;
   font-weight: 400;
-  font-size: clamp(48px, 6vw, 86px);
-  line-height: 1.08;
-  letter-spacing: -.04em;
-  margin: 0 0 30px;
+  font-size: clamp(44px, 7.3vw, 92px);
+  line-height: 1.05;
+  letter-spacing: -.045em;
+  margin: 0 0 24px;
+  text-shadow: 0 18px 40px rgba(0,0,0,.28);
 }
 .hero-copy p {
-  margin: 0 0 46px;
-  color: rgba(255,255,255,.9);
-  font-size: clamp(16px, 1.5vw, 22px);
-  line-height: 1.65;
+  margin: 0 auto 38px;
+  max-width: 680px;
+  color: rgba(255,255,255,.88);
+  font-size: clamp(15px, 1.7vw, 22px);
+  line-height: 1.7;
   font-weight: 700;
 }
 .cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .primary-btn {
-  height: 68px;
-  min-width: 190px;
+  height: 64px;
+  min-width: 188px;
   padding: 0 34px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  color: #111;
-  border: 1px solid #fff;
+  background: #d7ff63;
+  color: #071a1d;
+  border: 1px solid rgba(215,255,99,.9);
+  border-radius: 999px;
   font-weight: 900;
   font-size: 16px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.18);
 }
 .secondary-btn {
-  height: 68px;
-  min-width: 150px;
+  height: 64px;
+  min-width: 160px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-.ranking-preview {
-  padding: 44px 8vw;
-  background:
-    linear-gradient(120deg, rgba(0,22,25,.92), rgba(0,35,40,.86)),
-    url("assets/hero-fitness-blur.jpg") center / cover fixed;
+.home-feature-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  width: min(920px, calc(100% - 40px));
+  margin: -92px auto 0;
+  padding-bottom: 48px;
 }
-.ranking-preview h2 { margin: 0 0 18px; font-size: 34px; }
-.rank-list { display: grid; gap: 10px; max-width: 720px; }
+.home-feature-card {
+  min-height: 128px;
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 48px rgba(0,0,0,.16);
+}
+.home-feature-card b { display:block; font-size: 18px; margin-bottom: 8px; }
+.home-feature-card span { display:block; color: rgba(255,255,255,.76); font-size: 14px; line-height: 1.55; font-weight: 700; }
+.ranking-preview {
+  padding: 54px clamp(20px, 8vw, 96px);
+  background: #061f24;
+}
+.ranking-preview h2 { margin: 0 0 18px; font-size: 32px; }
+.rank-list { display: grid; gap: 10px; max-width: 760px; }
 .rank-row {
   display: grid;
-  grid-template-columns: 50px 1fr 100px;
+  grid-template-columns: 50px 1fr 132px;
   align-items: center;
   gap: 10px;
-  padding: 14px;
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.16);
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.09);
+  border: 1px solid rgba(255,255,255,.15);
 }
 @media (max-width: 800px) {
-  .topbar { padding: 22px; height: 96px; }
+  .hero-card { min-height: auto; }
+  .topbar {
+    min-height: auto;
+    padding: 20px 18px 16px;
+    align-items: center;
+  }
   .logo span { font-size: 30px; }
-  .auth-link { padding: 12px 18px; }
+  .logo small { font-size: 10px; letter-spacing: .22em; }
+  .auth-link { padding: 10px 14px; font-size: 13px; }
   .user-badge { display: none; }
-  .hero-copy h1 { font-size: 46px; }
+  .hero-copy {
+    min-height: 72vh;
+    align-items: flex-end;
+    padding: 52px 18px 122px;
+  }
+  .hero-copy h1 { font-size: clamp(42px, 13vw, 58px); }
+  .hero-copy p { font-size: 15px; margin-bottom: 28px; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .primary-btn, .secondary-btn { width: 100%; height: 58px; }
+  .home-feature-grid {
+    grid-template-columns: 1fr;
+    width: calc(100% - 32px);
+    margin-top: -82px;
+    padding-bottom: 30px;
+  }
+  .home-feature-card { min-height: auto; padding: 18px; border-radius: 20px; }
+  .ranking-preview { padding: 36px 18px; }
+  .rank-row { grid-template-columns: 36px 1fr; }
+  .rank-row span:last-child { grid-column: 2; color: rgba(255,255,255,.72); }
 }

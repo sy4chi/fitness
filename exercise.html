@@ -835,6 +835,218 @@
             color: #cc7a00;
             line-height: 1.4;
         }
+
+
+        /* FITNESS home-matched interface refresh: no gradient, keep model/preprocess JS untouched */
+        :root {
+            --bg-base: #061f24;
+            --bg-surface: rgba(255,255,255,0.12);
+            --border-color: rgba(255,255,255,0.18);
+            --primary: #d7ff63;
+            --primary-glow: rgba(215,255,99,0.22);
+            --accent-cyan: #d7ff63;
+            --accent-emerald: #d7ff63;
+            --accent-rose: #ff5d55;
+            --text-main: #ffffff;
+            --text-muted: rgba(255,255,255,0.72);
+        }
+        body {
+            background: #061f24;
+            color: #fff;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url("assets/hero-fitness.jpg") center / cover no-repeat;
+            opacity: .22;
+            filter: blur(4px);
+            transform: scale(1.03);
+            z-index: 0;
+            pointer-events: none;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(1,22,26,.72);
+            z-index: 0;
+            pointer-events: none;
+        }
+        #fitness-auth-bar {
+            top: 18px !important;
+            right: 24px !important;
+            background: rgba(255,255,255,.10) !important;
+            border: 1px solid rgba(255,255,255,.18) !important;
+            color: #fff !important;
+            border-radius: 999px !important;
+            padding: 9px 12px !important;
+        }
+        #fitness-login-open, #fitness-logout-btn {
+            border-radius: 999px !important;
+            background: rgba(255,255,255,.12) !important;
+            border-color: rgba(255,255,255,.22) !important;
+        }
+        header {
+            background: rgba(255,255,255,.08);
+            border-bottom: 1px solid rgba(255,255,255,.16);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 22px clamp(18px, 4vw, 48px);
+        }
+        h1 {
+            color: #fff;
+            font-size: clamp(1.05rem, 2vw, 1.55rem);
+            font-weight: 900;
+            letter-spacing: -.04em;
+        }
+        .status-pill, .overlay-badge {
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.18);
+            color: rgba(255,255,255,.86);
+            box-shadow: none;
+        }
+        main {
+            max-width: 1480px;
+            padding: 34px clamp(16px, 4vw, 48px);
+            gap: 22px;
+            grid-template-columns: minmax(0, 1.25fr) minmax(360px, .75fr);
+        }
+        .workspace-panel, .glass-card {
+            background: rgba(255,255,255,.11);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 28px;
+            box-shadow: 0 24px 60px rgba(0,0,0,.18);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+        .workspace-panel { padding: clamp(14px, 2vw, 24px); }
+        .camera-wrapper {
+            background: rgba(2, 18, 22, .86);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 24px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+        }
+        canvas#canvas-stream {
+            background: rgba(2,18,22,.76);
+        }
+        .overlay-state-badge.state-ready { background: rgba(255,255,255,.14); color:#fff; }
+        .state-down, .selector-btn.active, .btn-primary, .progress-bar-fill {
+            background: #d7ff63 !important;
+            color: #071a1d !important;
+            border-color: rgba(215,255,99,.9) !important;
+            box-shadow: 0 14px 32px rgba(0,0,0,.16) !important;
+        }
+        .camera-guide-box {
+            background: rgba(215,255,99,.13);
+            border: 1px solid rgba(215,255,99,.28);
+            color: #e6ffad;
+        }
+        .panel-title {
+            color: rgba(255,255,255,.72);
+            font-weight: 900;
+            letter-spacing: .08em;
+        }
+        .selector-btn, .summary-card, .feedback-bubble, .btn, .metric-bar-bg {
+            background: rgba(255,255,255,.10);
+            border: 1px solid rgba(255,255,255,.14);
+            color: rgba(255,255,255,.82);
+        }
+        .selector-btn:hover, .btn:hover { background: rgba(255,255,255,.16); color: #fff; }
+        .gauge-val, .metric-value, .summary-val, .feedback-bubble { color: #fff; }
+        .gauge-lbl, .metric-label, .summary-lbl, .sound-controller { color: rgba(255,255,255,.68); }
+        .gauge-bg { stroke: rgba(255,255,255,.16); }
+        .gauge-progress { stroke: #d7ff63; }
+        .fill-accuracy, .fill-stability { background: #d7ff63; }
+        .feedback-bubble {
+            border-left: 4px solid #d7ff63;
+            border-radius: 18px;
+            min-height: 60px;
+            font-weight: 800;
+        }
+        .badge-good {
+            background: rgba(215,255,99,.14);
+            border-color: rgba(215,255,99,.3);
+            color: #dfff8b;
+        }
+        .badge-bad {
+            background: rgba(255,93,85,.14);
+            border-color: rgba(255,93,85,.3);
+            color: #ffb3ae;
+        }
+        .toggle-slider { background: rgba(255,255,255,.22); }
+        input:checked+.toggle-slider { background: #d7ff63; }
+        #loader-overlay {
+            background: #061f24;
+            color: #fff;
+        }
+        #loader-overlay::before {
+            content:"";
+            position:absolute;
+            inset:0;
+            background: url("assets/hero-fitness.jpg") center / cover no-repeat;
+            opacity:.18;
+            filter: blur(4px);
+            transform: scale(1.03);
+        }
+        .loader-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 28px;
+            padding: 34px 24px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 24px 60px rgba(0,0,0,.2);
+        }
+        .loader-title, .loader-subtitle, #loader-status-text { color: #fff; }
+        .loader-subtitle, #loader-status-text, .loader-cache-tip { color: rgba(255,255,255,.7); }
+        .progress-container { background: rgba(255,255,255,.18); }
+        #loader-percentage-text { color: #d7ff63; }
+        #start-btn {
+            background: #d7ff63 !important;
+            color: #071a1d !important;
+            border-radius: 999px !important;
+            font-weight: 900 !important;
+            box-shadow: 0 18px 40px rgba(0,0,0,.18) !important;
+        }
+        footer { border-top-color: rgba(255,255,255,.16); color: rgba(255,255,255,.55); }
+        @media (max-width: 1024px) {
+            main { grid-template-columns: 1fr; padding: 22px 18px; }
+            .controls-panel { gap: 16px; }
+        }
+        @media (max-width: 720px) {
+            body::before { opacity: .18; }
+            #fitness-auth-bar {
+                position: static !important;
+                margin: 10px 14px 0 auto;
+                width: max-content;
+                max-width: calc(100% - 28px);
+            }
+            header {
+                margin-top: 8px;
+                padding: 18px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .status-pill { width: 100%; justify-content: center; }
+            main { padding: 16px 12px 24px; gap: 14px; }
+            .workspace-panel, .glass-card { border-radius: 22px; }
+            .camera-wrapper { aspect-ratio: 3 / 4; border-radius: 20px; }
+            .camera-overlay { inset: 12px; }
+            .overlay-bottom { flex-direction: column; align-items: stretch; gap: 10px; }
+            .camera-guide-box { max-width: 100%; font-size: .76rem; padding: 10px 12px; }
+            .sound-controller { align-items: flex-start; gap: 12px; }
+            .exercise-selectors { grid-template-columns: 1fr; }
+            .selector-btn { flex-direction: row; justify-content: center; padding: 14px; }
+            .analytics-grid { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: 1fr 1fr; }
+            .actions-row { flex-direction: column; gap: 10px; }
+            .loader-content { width: calc(100% - 28px); padding: 28px 18px; }
+        }
+
     </style>
 
 <script>
@@ -861,13 +1073,13 @@
 <body>
 
 <!-- Camera Permission Fix Overlay -->
-<div id="camera-permission-fix" style="position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:100000; display:flex; gap:10px; align-items:center; padding:12px 14px; border-radius:14px; background:rgba(0,0,0,.72); color:#fff; border:1px solid rgba(255,255,255,.25); backdrop-filter:blur(12px); box-shadow:0 18px 40px rgba(0,0,0,.35); font:700 14px system-ui;">
+<div id="camera-permission-fix" style="position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:100000; display:none; gap:10px; align-items:center; padding:12px 14px; border-radius:14px; background:rgba(0,0,0,.72); color:#fff; border:1px solid rgba(255,255,255,.25); backdrop-filter:blur(12px); box-shadow:0 18px 40px rgba(0,0,0,.35); font:700 14px system-ui;">
   <span>카메라 권한이 필요합니다</span>
-  <button type="button" onclick="requestCameraPermissionAndStart()" style="height:38px; padding:0 14px; border:0; border-radius:10px; background:#fff; color:#111; font-weight:900; cursor:pointer;">카메라 시작</button>
+  <button type="button" onclick="requestCameraPermissionOnly()" style="height:38px; padding:0 14px; border:0; border-radius:10px; background:#fff; color:#111; font-weight:900; cursor:pointer;">카메라 권한 허용</button>
 </div>
 
 <script>
-async function requestCameraPermissionAndStart() {
+async function requestCameraPermissionOnly() {
   const box = document.getElementById("camera-permission-fix");
   try {
     // iOS는 getUserMedia await 이후 사용자 제스처가 끊길 수 있어서, 카메라 요청 전에 TTS를 먼저 깨운다.
@@ -887,42 +1099,34 @@ async function requestCameraPermissionAndStart() {
     testStream.getTracks().forEach(track => track.stop());
 
     if (box) box.style.display = "none";
-
-    // 원본 GRU 로딩 시작 버튼이 있으면 그 버튼을 눌러서 기존 기능 그대로 진입
+    const statusText = document.getElementById("status-text");
+    if (statusText) statusText.innerText = "카메라 권한이 허용되었습니다. 시작 버튼을 눌러 운동을 시작하세요.";
     const startBtn = document.getElementById("start-btn");
-    if (startBtn && typeof startBtn.click === "function" && startBtn.style.display !== "none") {
-      startBtn.click();
-      return;
-    }
-
-    // 원본 함수가 있으면 호출
-    if (typeof window.handleStartButton === "function") {
-      window.handleStartButton();
-      return;
-    }
-
-    // 혹시 원본 카메라 함수명이 따로 있으면 순서대로 시도
-    const candidates = ["startCamera", "initCamera", "startWebcam", "enableCam", "startWorkout"];
-    for (const name of candidates) {
-      if (typeof window[name] === "function") {
-        await window[name]();
-        return;
-      }
-    }
-
-    alert("카메라 권한은 허용됐지만 시작 함수를 찾지 못했습니다. 페이지를 새로고침 후 다시 눌러줘.");
+    if (startBtn) startBtn.style.display = "block";
+    // 중요: 권한 허용 후 자동 시작하지 않는다. 사용자가 반드시 시작 버튼을 눌러야 한다.
   } catch (err) {
     console.error("[Camera Permission Error]", err);
     alert("카메라 권한 요청 실패: " + (err && err.message ? err.message : err));
   }
 }
 
-window.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", async function () {
   const box = document.getElementById("camera-permission-fix");
   if (!box) return;
-
-  // 이미 카메라 권한이 허용된 경우에도 사용자가 직접 시작할 수 있게 버튼은 남겨둔다.
-  // 단, 원본 시작 버튼이 보이면 중복으로 너무 거슬리지 않게 약간 아래에만 표시.
+  // 카메라는 시작 버튼에서 요청한다. 이미 허용된 경우 별도 권한 버튼은 보여주지 않는다.
+  box.style.display = "none";
+  try {
+    if (navigator.permissions && navigator.permissions.query) {
+      const status = await navigator.permissions.query({ name: "camera" });
+      if (status.state === "denied") {
+        box.style.display = "flex";
+        const span = box.querySelector("span");
+        if (span) span.textContent = "카메라 권한이 차단되어 있습니다";
+      }
+    }
+  } catch(e) {
+    box.style.display = "none";
+  }
 });
 </script>
 
@@ -1537,8 +1741,10 @@ window.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            if (hasMp3Audio && isiOSDevice && !mp3AudioUnlocked) {
-                unlockMp3AudioForIOS();
+            if (hasMp3Audio) {
+                // 실제 MP3 자체를 사용자 클릭 흐름에서 재생한다.
+                // iOS/Safari에서 무음 unlock 오디오가 실제 안내 음성을 막는 문제를 피한다.
+                mp3AudioUnlocked = true;
             }
 
             if (!hasMp3Audio && isiOSDevice && !ttsUnlocked) {
@@ -2106,7 +2312,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
                 await loadONNXModel(activeExercise);
 
-                initCamera();
+                updateConnectionStatus('connected', '준비 완료. 시작 버튼을 누르면 카메라가 켜집니다.');
 
             } catch (err) {
                 console.error("Initialization failed:", err);
@@ -2185,7 +2391,8 @@ window.addEventListener("DOMContentLoaded", function () {
             label.innerText = text;
         }
 
-        async function initCamera() {
+        window.initCamera = async function initCamera() {
+            if (isCameraActive && video && video.srcObject) return;
             try {
                 // 모바일 기기의 경우 해상도를 더 낮춰 GPU/CPU 부하 감소
                 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -2217,8 +2424,9 @@ window.addEventListener("DOMContentLoaded", function () {
             } catch (err) {
                 console.error("Webcam init failed:", err);
                 alert("카메라 권한을 얻을 수 없습니다. 브라우저 주소창 왼쪽의 카메라 차단 아이콘을 눌러 승인해주세요.");
+                throw err;
             }
-        }
+        };
 
         // --- Core Render Loop ---
         // MediaPipe는 매 프레임 실행 (타임스탬프 단조증가 필수)
@@ -2746,19 +2954,37 @@ window.addEventListener("DOMContentLoaded", function () {
             startPreloadingAssets();
         }
 
-        // 시작 버튼 클릭 핸들러 — 사용자 제스처 안에서 TTS 엔진 활성화
-        window.handleStartButton = function () {
-            // iPad/iPhone/Safari 대응: 사용자 버튼 클릭 순간에 TTS 엔진을 직접 unlock
-            unlockTTSForIOS();
+        let workoutStartRequested = false;
+
+        // 시작 버튼 클릭 핸들러 — 사용자 제스처 안에서 MP3/TTS와 카메라를 직접 시작
+        window.handleStartButton = async function () {
+            if (workoutStartRequested) return;
+            workoutStartRequested = true;
+
+            const startBtn = document.getElementById("start-btn");
+            if (startBtn) {
+                startBtn.disabled = true;
+                startBtn.innerText = "시작 중...";
+            }
+
+            // iPad/iPhone/Safari 대응: 버튼 클릭 이벤트 안에서 바로 음성 재생을 시도한다.
+            try { unlockTTSForIOS(); } catch(e) {}
+            speakTTS("준비 완료. 자세를 잡고 운동을 시작해볼게요.", true);
 
             // 로딩 오버레이 제거
             const loader = document.getElementById("loader-overlay");
-            loader.classList.add("fade-out");
+            if (loader) loader.classList.add("fade-out");
 
-            // 인트로 안내 TTS
-            setTimeout(() => {
-                speakTTS("준비 완료. 자세를 잡고 운동을 시작해볼게요.", true);
-            }, 300);
+            // 카메라도 자동 권한 버튼이 아니라 시작 버튼을 눌렀을 때만 켠다.
+            try {
+                await window.initCamera();
+            } catch(e) {
+                workoutStartRequested = false;
+                if (startBtn) {
+                    startBtn.disabled = false;
+                    startBtn.innerText = "▶ 운동 시작하기";
+                }
+            }
         };
 
         if (document.readyState === 'loading') {
