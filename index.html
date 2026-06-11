@@ -24,7 +24,7 @@
       <section class="hero-copy">
         <div class="hero-copy-inner">
           <div class="hero-kicker">ON-DEVICE AI FITNESS</div>
-          <h1>집에서 간단하게 배우는<br>정확한 운동 자세</h1>
+          <h1><span>집에서 간단하게</span><span>배우는 정확한</span><span>운동 자세</span></h1>
           <p>시작하기를 누르면 바로 GRU AI Fitness Assistant로 이동합니다.</p>
           <div class="cta-row">
             <a class="primary-btn" href="exercise.html">지금 시작하기</a>
@@ -39,11 +39,6 @@
       </section>
     </section>
   </main>
-
-  <section class="ranking-preview">
-    <h2>랭킹</h2>
-    <div id="rankList" class="rank-list">랭킹을 불러오는 중...</div>
-  </section>
 
 
 <script>
@@ -109,7 +104,8 @@ async function loadRanking() {
 }
 
 updateAuthUI();
-loadRanking();
+// 홈 화면에서는 랭킹을 자동으로 표시하지 않습니다.
+// 랭킹은 "정확도 랭킹 보기" 버튼을 눌러 ranking.html에서 확인합니다.
 </script>
 
 </body>

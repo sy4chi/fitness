@@ -93,6 +93,7 @@ button, input { font-family: inherit; }
   margin: 0 0 24px;
   text-shadow: 0 18px 40px rgba(0,0,0,.28);
 }
+.hero-copy h1 span { display: block; white-space: nowrap; }
 .hero-copy p {
   margin: 0 auto 38px;
   max-width: 680px;
@@ -177,8 +178,19 @@ button, input { font-family: inherit; }
     align-items: flex-end;
     padding: 52px 18px 122px;
   }
-  .hero-copy h1 { font-size: clamp(42px, 13vw, 58px); }
-  .hero-copy p { font-size: 15px; margin-bottom: 28px; }
+  .hero-copy h1 {
+    font-size: clamp(40px, 11.2vw, 54px);
+    line-height: 1.12;
+    letter-spacing: -0.055em;
+    word-break: keep-all;
+    overflow-wrap: normal;
+  }
+  .hero-copy h1 span {
+    display: block;
+    white-space: nowrap;
+  }
+  .hero-copy h1 span { display: block; white-space: nowrap; }
+.hero-copy p { font-size: 15px; margin-bottom: 28px; }
   .cta-row { flex-direction: column; align-items: stretch; }
   .primary-btn, .secondary-btn { width: 100%; height: 58px; }
   .home-feature-grid {
