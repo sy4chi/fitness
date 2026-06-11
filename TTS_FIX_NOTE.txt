@@ -1,0 +1,5 @@
+TTS/feedback fix
+- Removed wrong-posture disallowed TTS; only warning beep remains.
+- Reworked iOS/iPad/iPhone TTS to use a queue instead of frequent cancel/speak calls.
+- Added duplicate-feedback throttling to prevent Safari speech queue from freezing.
+- Changed feedback generation so pushup and pullup can speak feedback too, not only squat down-state feedback.

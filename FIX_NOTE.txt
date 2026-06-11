@@ -1,0 +1,5 @@
+수정 내용:
+1. 랭킹 정렬 기준을 총 횟수 순에서 평균 정확도(avgScore) 높은 순으로 변경.
+   동점이면 총 횟수(totalReps)가 높은 사용자가 위로 표시됩니다.
+2. GRU exercise.html 우측 상단 로그인 버튼을 내부 로그인 오버레이가 아니라 login.html로 이동하도록 변경.
+3. 기존 ONNX/MediaPipe/GRU 기능은 변경하지 않았습니다.

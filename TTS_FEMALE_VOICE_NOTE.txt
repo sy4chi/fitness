@@ -1,0 +1,9 @@
+TTS female/natural Korean fix
+- Korean female voice is now preferred by name: Yuna/Sora/Narae/Yuri/Jiyoung/Seoyeon and female/woman labels.
+- Natural/Premium/Siri/Google/Apple/Microsoft voices are prioritized when available.
+- Speech rate lowered and pitch raised slightly for a softer female Korean sound.
+- iOS/iPad voice unlock now uses the same selected Korean female voice.
+- Feedback wording was lightly naturalized in Korean.
+
+Important for iPhone/iPad:
+The browser can only use voices installed on the device. For the best result, install/select a Korean female voice in iOS Settings > Accessibility > Spoken Content > Voices > Korean.

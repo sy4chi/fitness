@@ -1,0 +1,6 @@
+업데이트 내용
+- mp3.zip의 음성 파일을 final/tts/ 폴더에 복사하고 영어 파일명으로 정리했습니다.
+- exercise.html의 TTS를 브라우저 speechSynthesis 우선이 아니라 업로드한 MP3 파일 우선 재생 방식으로 변경했습니다.
+- iPhone/iPad 자동재생 제한 대응을 위해 첫 클릭/터치 시 MP3 오디오 unlock을 수행합니다.
+- MP3가 없는 문구는 기존 브라우저 TTS로 fallback됩니다.
+- 모델 입력 전처리는 Python 원본 규칙과 동일한 [1,30,132]이며, smoothing 없는 원본 랜드마크를 모델 입력에 사용하도록 수정했습니다.
