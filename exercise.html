@@ -835,22 +835,25 @@
             color: #cc7a00;
             line-height: 1.4;
         }
+    
 
-
-        /* ===== FITNESS unified UI override: CSS only, no model/logic changes ===== */
+        /* ===== UI ONLY PATCH: match home interface, no logic changes ===== */
         :root {
-            --fit-lime: #d6ff55;
-            --fit-lime-soft: rgba(214, 255, 85, .18);
-            --fit-bg: #071f23;
-            --fit-card: rgba(255, 255, 255, .12);
-            --fit-border: rgba(255, 255, 255, .22);
-            --fit-text: #ffffff;
-            --fit-muted: rgba(255, 255, 255, .72);
+            --bg-base: #071112;
+            --bg-surface: rgba(255,255,255,.12);
+            --border-color: rgba(255,255,255,.18);
+            --primary: #d7ff4f;
+            --primary-glow: rgba(215,255,79,.22);
+            --accent-cyan: #d7ff4f;
+            --accent-emerald: #d7ff4f;
+            --accent-rose: #ff5e57;
+            --text-main: #ffffff;
+            --text-muted: rgba(255,255,255,.72);
         }
         body {
-            background: #071f23 !important;
-            color: var(--fit-text) !important;
-            font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+            background: #071112;
+            color: #fff;
+            font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
         }
         body::before {
             content: "";
@@ -858,201 +861,83 @@
             inset: 0;
             z-index: -2;
             background: url("assets/hero-fitness.jpg") center / cover no-repeat;
-            filter: blur(7px);
+            filter: blur(6px);
             transform: scale(1.04);
-            opacity: .55;
+            opacity: .48;
         }
         body::after {
             content: "";
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: rgba(4, 25, 29, .68);
+            background: rgba(3, 28, 31, .72);
         }
         header {
-            background: rgba(255, 255, 255, .08) !important;
-            border: 1px solid var(--fit-border) !important;
-            border-radius: 28px !important;
-            margin: 20px auto 18px !important;
-            width: min(1180px, calc(100% - 32px)) !important;
-            padding: 18px 22px !important;
-            box-shadow: none !important;
-            backdrop-filter: blur(18px) !important;
+            background: rgba(255,255,255,.06);
+            border-bottom: 1px solid rgba(255,255,255,.18);
+            color: #fff;
         }
-        .logo-section h1 {
-            color: #fff !important;
-            font-weight: 900 !important;
-            letter-spacing: -.04em !important;
+        h1, .panel-title, .summary-val, .metric-value, .gauge-val { color: #fff; }
+        .logo-badge {
+            background: #d7ff4f;
+            color: #071112;
+            border: 0;
+            box-shadow: none;
         }
         .status-pill,
-        #fitness-auth-bar {
-            background: rgba(255,255,255,.10) !important;
-            border: 1px solid var(--fit-border) !important;
-            color: #fff !important;
-            border-radius: 999px !important;
-            box-shadow: none !important;
-        }
-        main {
-            width: min(1180px, calc(100% - 32px)) !important;
-            margin: 0 auto !important;
-            gap: 18px !important;
-        }
-        .workspace-panel,
-        .controls-panel,
         .glass-card,
         .camera-wrapper,
         .sound-controller,
         .summary-card,
+        .camera-guide-box,
         .feedback-bubble {
-            background: var(--fit-card) !important;
-            border: 1px solid var(--fit-border) !important;
-            box-shadow: none !important;
-            backdrop-filter: blur(18px) !important;
+            background: rgba(255,255,255,.10);
+            border: 1px solid rgba(255,255,255,.20);
+            color: #fff;
+            box-shadow: none;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
-        .workspace-panel,
-        .controls-panel,
-        .glass-card {
-            border-radius: 28px !important;
+        .workspace-panel, .controls-panel { gap: 22px; }
+        .camera-wrapper { border-radius: 28px; overflow: hidden; }
+        .selector-btn,
+        .btn {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.18);
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            box-shadow: none;
         }
-        .camera-wrapper {
-            border-radius: 26px !important;
-            overflow: hidden !important;
-        }
-        .camera-wrapper::before { display: none !important; }
-        video#webcam,
-        #canvas-stream {
-            border-radius: 26px !important;
+        .selector-btn.active,
+        .btn-primary,
+        .btn[style*="accent-emerald"] {
+            background: #d7ff4f !important;
+            color: #071112 !important;
+            border-color: #d7ff4f !important;
         }
         .overlay-badge,
         .overlay-state-badge,
-        .camera-guide-box,
         .ai-badge {
-            background: rgba(0,0,0,.42) !important;
-            border: 1px solid rgba(255,255,255,.24) !important;
-            color: #fff !important;
-            box-shadow: none !important;
+            border-radius: 999px;
         }
-        .panel-title {
-            color: #fff !important;
-            font-size: 1.05rem !important;
-            font-weight: 900 !important;
-            letter-spacing: -.02em !important;
-        }
-        .selector-btn {
-            background: rgba(255,255,255,.10) !important;
-            border: 1px solid rgba(255,255,255,.18) !important;
-            color: #fff !important;
-            border-radius: 18px !important;
-            box-shadow: none !important;
-        }
-        .selector-btn.active {
-            background: var(--fit-lime) !important;
-            border-color: var(--fit-lime) !important;
-            color: #061316 !important;
-        }
-        .btn,
-        .btn-primary,
-        #start-btn {
-            border-radius: 999px !important;
-            font-weight: 900 !important;
-            box-shadow: none !important;
-        }
-        .btn-primary,
-        #start-btn {
-            background: var(--fit-lime) !important;
-            color: #061316 !important;
-            border: 1px solid var(--fit-lime) !important;
-        }
-        .metric-bar-bg,
-        .gauge-bg {
-            background: rgba(255,255,255,.16) !important;
-            stroke: rgba(255,255,255,.16) !important;
-        }
-        .metric-bar-fill,
-        .gauge-progress {
-            background: var(--fit-lime) !important;
-            stroke: var(--fit-lime) !important;
-        }
-        .summary-val,
-        .gauge-val,
-        .metric-value {
-            color: var(--fit-lime) !important;
-        }
-        .summary-lbl,
-        .metric-label,
-        .gauge-lbl,
-        .sound-controller span,
-        footer {
-            color: var(--fit-muted) !important;
-        }
-        footer {
-            padding: 24px 16px 32px !important;
-            background: transparent !important;
-        }
-        #loader-overlay {
-            background: rgba(4, 25, 29, .82) !important;
-            backdrop-filter: blur(18px) !important;
-        }
-        .loader-content {
-            background: rgba(255,255,255,.12) !important;
-            border: 1px solid var(--fit-border) !important;
-            border-radius: 28px !important;
-            box-shadow: none !important;
-        }
-        .loader-title {
-            color: #fff !important;
-            letter-spacing: -.03em !important;
-        }
-        .loader-subtitle,
-        .loader-cache-tip,
-        #loader-status-text,
-        #loader-percentage-text {
-            color: var(--fit-muted) !important;
-        }
-        .progress-container {
-            background: rgba(255,255,255,.16) !important;
-        }
-        .progress-bar-fill {
-            background: var(--fit-lime) !important;
-        }
+        .gauge-bg,
+        .metric-bar-bg { stroke: rgba(255,255,255,.14); background: rgba(255,255,255,.14); }
+        .metric-bar-fill, .gauge-progress { background: #d7ff4f; stroke: #d7ff4f; }
+        .metric-label, .summary-lbl, .gauge-lbl, .status-pill, .sound-label { color: rgba(255,255,255,.72); }
+
         @media (max-width: 900px) {
-            header, main {
-                width: calc(100% - 24px) !important;
-            }
-            header {
-                margin-top: 12px !important;
-                padding: 14px 16px !important;
-                border-radius: 22px !important;
-            }
-            .logo-section h1 {
-                font-size: 1.05rem !important;
-                word-break: keep-all !important;
-            }
-            main {
-                display: flex !important;
-                flex-direction: column !important;
-            }
-            .workspace-panel,
-            .controls-panel,
-            .glass-card {
-                border-radius: 22px !important;
-            }
-            .camera-wrapper {
-                border-radius: 20px !important;
-                min-height: 360px !important;
-            }
-            .exercise-selectors,
-            .summary-grid,
-            .analytics-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .actions-row {
-                flex-direction: column !important;
-            }
-            .btn,
-            .btn-primary {
-                width: 100% !important;
-            }
+            body { padding-bottom: 18px; }
+            header { padding: 16px 18px; }
+            h1 { font-size: 1.05rem; }
+            .logo-section { gap: 10px; }
+            main { padding: 18px; gap: 18px; }
+            .workspace-panel, .controls-panel { width: 100%; }
+            .camera-wrapper { min-height: 58vh; border-radius: 24px; }
+            .glass-card { border-radius: 24px; padding: 18px; }
+            .exercise-selectors { grid-template-columns: 1fr; }
+            .analytics-grid, .summary-grid { grid-template-columns: 1fr; }
+            .actions-row { flex-direction: column; }
+            .btn { width: 100%; min-height: 54px; }
         }
 
     </style>
