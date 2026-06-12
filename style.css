@@ -129,3 +129,59 @@ a { color: inherit; text-decoration: none; }
   .user-badge { display: none; }
   .hero-copy h1 { font-size: 46px; }
 }
+
+
+/* --- mobile title / home cleanup patch --- */
+.hero-copy h1,
+.hero-title {
+  word-break: keep-all;
+  overflow-wrap: normal;
+  line-break: strict;
+}
+.hero-title span {
+  display: block;
+  white-space: nowrap;
+}
+@media (max-width: 800px) {
+  .hero-card::after {
+    background: rgba(0, 24, 28, .54);
+  }
+  .hero-copy {
+    align-items: flex-start;
+    padding: 132px 22px 64px;
+  }
+  .hero-copy-inner {
+    width: 100%;
+    max-width: 430px;
+  }
+  .hero-copy h1,
+  .hero-title {
+    font-size: clamp(38px, 11.2vw, 50px);
+    line-height: 1.18;
+    letter-spacing: -.045em;
+    margin-bottom: 24px;
+  }
+  .hero-copy p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 34px;
+  }
+  .cta-row {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+    min-width: 0;
+    border-radius: 999px;
+    height: 64px;
+    font-size: 18px;
+  }
+}
+@media (max-width: 390px) {
+  .hero-copy h1,
+  .hero-title {
+    font-size: clamp(34px, 10.4vw, 42px);
+  }
+}
