@@ -33,6 +33,13 @@
       </section>
     </section>
   </main>
+
+  <section class="ranking-preview">
+    <h2>랭킹</h2>
+    <div id="rankList" class="rank-list">랭킹을 불러오는 중...</div>
+  </section>
+
+
 <script>
 const FITNESS_KEYS = ["fitnessUserId", "fitnessUser", "user", "loggedInUserId", "currentUser", "username"];
 
@@ -96,6 +103,7 @@ async function loadRanking() {
 }
 
 updateAuthUI();
+loadRanking();
 </script>
 
 </body>
