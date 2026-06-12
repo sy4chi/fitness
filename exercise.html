@@ -1199,7 +1199,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     </main>
 
     <footer>
-        FITNESS © 2026. ONNX Runtime Web 기반 실시간 운동 자세 분석
+        FITNESS © 2026. Python 로컬 AI 기반 실시간 운동 자세 분석
     </footer>
 
     <!-- MediaPipe Vision Task Library (ES module dynamic imports) -->
@@ -2247,6 +2247,89 @@ window.addEventListener("DOMContentLoaded", async function () {
         let fpsSamples = [];
         let lastMpTimestamp = 0; // MediaPipe 타임스탬프 단조증가 보장용
 
+        // 로컬 Python AI WebSocket 모드: 프론트엔드는 판단하지 않고 main.py 결과만 표시
+        let backendSocket = null;
+        let backendSocketExercise = null;
+        let backendBusy = false;
+        let lastBackendSendAt = 0;
+        let prevBackendCount = 0;
+
+        function getBackendWsUrl(exercise) {
+            const protocol = location.protocol === "https:" ? "wss:" : "ws:";
+            return `${protocol}//${location.host}/ws/${exercise}`;
+        }
+
+        function ensureBackendSocket() {
+            if (backendSocket && backendSocket.readyState === WebSocket.OPEN && backendSocketExercise === activeExercise) {
+                return true;
+            }
+
+            if (backendSocket) {
+                try { backendSocket.close(); } catch (_) {}
+            }
+
+            backendSocketExercise = activeExercise;
+            backendSocket = new WebSocket(getBackendWsUrl(activeExercise));
+
+            backendSocket.onopen = () => {
+                updateConnectionStatus('connected', `Python ${activeExercise.toUpperCase()} AI 연결됨`);
+            };
+
+            backendSocket.onmessage = (event) => {
+                backendBusy = false;
+                try {
+                    const data = JSON.parse(event.data);
+                    if (data.error) {
+                        if (data.error === "no_pose") updateHUDNoPose();
+                        return;
+                    }
+                    applyBackendResult(data);
+                } catch (err) {
+                    console.warn("Backend result parse fail:", err);
+                }
+            };
+
+            backendSocket.onerror = (err) => {
+                backendBusy = false;
+                console.error("Python WebSocket 오류:", err);
+                updateConnectionStatus('disconnected', 'Python AI 연결 실패');
+            };
+
+            backendSocket.onclose = () => {
+                backendBusy = false;
+                updateConnectionStatus('disconnected', 'Python AI 연결 종료');
+            };
+
+            return false;
+        }
+
+        function captureFrameBase64() {
+            const temp = document.createElement('canvas');
+            temp.width = video.videoWidth;
+            temp.height = video.videoHeight;
+            const tctx = temp.getContext('2d');
+            tctx.drawImage(video, 0, 0, temp.width, temp.height);
+            return temp.toDataURL('image/jpeg', 0.72);
+        }
+
+        function applyBackendResult(data) {
+            const poseLabel = data.pose_label || "Good";
+            const stateData = data.state || { state: "ready", count: 0, measuring: false };
+            const scoreData = data.score || { total: 0, accuracy: null, stability: 100, measuring: stateData.measuring };
+            const feedbackText = data.feedback || "";
+            const landmarks = (data.landmarks || []).map(p => ({ x: p[0], y: p[1], visibility: 1 }));
+
+            if (landmarks.length >= 33) {
+                drawSkeletonOverlay(landmarks, poseLabel);
+            }
+
+            stateData.countIncreased = Number(stateData.count || 0) > prevBackendCount;
+            stateData.repDisallowed = false;
+            prevBackendCount = Number(stateData.count || 0);
+
+            updateHUD(stateData, scoreData, feedbackText, poseLabel);
+        }
+
         function processFrameLoop() {
             if (!isCameraActive || !video.videoWidth) {
                 requestAnimationFrame(processFrameLoop);
@@ -2261,71 +2344,24 @@ window.addEventListener("DOMContentLoaded", async function () {
             const avgFps = fpsSamples.reduce((a, b) => a + b, 0) / fpsSamples.length;
             document.getElementById('guide-badge').innerText = `FPS ${avgFps.toFixed(0)}`;
 
-            // Draw Webcam mirrored frame
+            // 화면에는 카메라만 그립니다. 판단은 Python backend가 수행합니다.
             ctx.save();
             ctx.translate(canvas.width, 0);
             ctx.scale(-1, 1);
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
             ctx.restore();
 
-            // MediaPipe 포즈 감지 — 매 프레임 실행 (고해상도 Monotonic 타임스탬프 사용)
-            if (poseLandmarker) {
-                // performance.now()는 절대로 뒤로 가지 않는 고해상도 Monotonic 타이머입니다.
-                // MediaPipe 내부적으로 ms -> us (마이크로초) 변환 시 올림/내림 오차로 인해
-                // 소수점 이하 값 충돌이 생기지 않도록 정수형 ms 기준 최소 1ms 증가를 완벽 보장합니다.
-                const currentMs = Math.round(performance.now());
-                const mpTimestamp = Math.max(currentMs, lastMpTimestamp + 1);
-                lastMpTimestamp = mpTimestamp;
+            const socketReady = ensureBackendSocket();
 
+            // Python 로컬 AI에 프레임 전송. 프론트엔드는 Good/Bad/카운트/피드백을 판단하지 않습니다.
+            if (socketReady && !backendBusy && now - lastBackendSendAt >= 80) {
                 try {
-                    const results = poseLandmarker.detectForVideo(video, mpTimestamp);
-                    // tasks-vision API 규격에 맞춰 landmarks와 poseLandmarks 둘 다 대응하도록 수정
-                    const landmarks = results.landmarks || results.poseLandmarks;
-
-                    if (landmarks && landmarks.length > 0) {
-                        const rawLm = landmarks[0];
-                        const lm = smoothPoseLandmarks(rawLm);
-
-                        // 1. 특징 벡터 추출: Python 학습 코드와 동일하게 smoothing 없는 원본 랜드마크 사용
-                        const feat = getFeatureVector(rawLm);
-                        featureBuffer.push(feat);
-                        if (featureBuffer.length > 30) featureBuffer.shift();
-
-                        // 2. ONNX 추론 — fire-and-forget 비동기 (렌더 루프 블로킹 없음)
-                        onnxFrameCounter++;
-                        if (featureBuffer.length === 30 && onnxSession && !isOnnxRunning) {
-                            runOnnxInference();
-                        }
-
-                        const poseLabel = cachedPoseLabel;
-
-                        // 3. Physics & State updates
-                        const angles = getAngles(lm, activeExercise);
-
-                        landmarkHistory.push({ left_shoulder_x: lm[11].x });
-                        if (landmarkHistory.length > 30) landmarkHistory.shift();
-
-                        const stateData = stateMachineInstance.update(angles, activeExercise, 0);
-                        const scoreData = calculateScore(angles, activeExercise, poseLabel, landmarkHistory, stateData.state);
-                        const feedbackText = generateFeedback(angles, activeExercise, scoreData, stateData.state);
-
-                        // 4. Draw skeleton
-                        drawSkeletonOverlay(lm, poseLabel);
-
-                        // 5. Update HUD
-                        updateHUD(stateData, scoreData, feedbackText, poseLabel);
-
-                    } else {
-                        // MediaPipe temporarily lost tracking.
-                        // DO NOT clear featureBuffer completely to avoid resetting the 30-frame sequence for the GRU model.
-                        // Wiping it out causes the model to suspend prediction for 30 successful frames.
-                        // Instead, we just reset the landmark smoothing filter cache so that when tracking is regained,
-                        // it starts fresh and doesn't drag coordinate values from the far past.
-                        smoothedLandmarks = null;
-                        updateHUDNoPose();
-                    }
-                } catch (mpErr) {
-                    console.warn("MediaPipe detection error:", mpErr);
+                    backendBusy = true;
+                    lastBackendSendAt = now;
+                    backendSocket.send(JSON.stringify({ frame: captureFrameBase64() }));
+                } catch (err) {
+                    backendBusy = false;
+                    console.warn("Python AI 프레임 전송 실패:", err);
                 }
             }
 
@@ -2552,9 +2588,14 @@ window.addEventListener("DOMContentLoaded", async function () {
             lastChosenSide = {};
 
             updateCameraGuide();
-
-            // Lazy load selected ONNX model
-            await loadONNXModel(exercise);
+            // Python backend WebSocket을 새 운동으로 다시 연결
+            if (backendSocket) {
+                try { backendSocket.close(); } catch (_) {}
+                backendSocket = null;
+            }
+            backendSocketExercise = null;
+            backendBusy = false;
+            prevBackendCount = 0;
         };
 
         window.updateCameraGuide = function () {
@@ -2729,7 +2770,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         // Start initialization (Guaranteed to execute even if DOMContentLoaded already fired)
         function initApp() {
             getSafeVoices();
-            startPreloadingAssets();
+            updateConnectionStatus('loading', 'Python AI 연결 대기 중');
         }
 
         // 시작 버튼 클릭 핸들러 — 사용자 제스처 안에서 TTS 엔진 활성화
