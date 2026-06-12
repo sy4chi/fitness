@@ -1722,7 +1722,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 this.repScores = [];
                 this.downScores = [];
             }
-            update(angles, exercise, qualityScore) {
+            update(angles, exercise, qualityScore, poseLabel = "Good") {
                 const cfg = THRESHOLDS[exercise];
                 const prevState = this.state;
                 let angle;
@@ -1737,7 +1737,9 @@ window.addEventListener("DOMContentLoaded", async function () {
                 }
 
                 let countIncreased = false;
+                let repDisallowed = false;
                 const inverted = !!cfg.inv;
+                const isGood = poseLabel === "Good";
 
                 if (!inverted) {
                     if (this.state === "ready" && angle < cfg.down) {
@@ -1747,10 +1749,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                         this.downScores.push(qualityScore);
                         if (angle > cfg.up) {
                             this.state = "ready";
-                            this.count += 1;
-                            this.repScores.push(this.downScores.length ? Math.max(...this.downScores) : qualityScore);
+                            if (isGood) {
+                                this.count += 1;
+                                this.repScores.push(this.downScores.length ? Math.max(...this.downScores) : qualityScore);
+                                countIncreased = true;
+                            } else {
+                                repDisallowed = true;
+                            }
                             this.downScores = [];
-                            countIncreased = true;
                         }
                     }
                 } else {
@@ -1761,10 +1767,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                         this.downScores.push(qualityScore);
                         if (angle < cfg.up) {
                             this.state = "ready";
-                            this.count += 1;
-                            this.repScores.push(this.downScores.length ? Math.max(...this.downScores) : qualityScore);
+                            if (isGood) {
+                                this.count += 1;
+                                this.repScores.push(this.downScores.length ? Math.max(...this.downScores) : qualityScore);
+                                countIncreased = true;
+                            } else {
+                                repDisallowed = true;
+                            }
                             this.downScores = [];
-                            countIncreased = true;
                         }
                     }
                 }
@@ -1775,7 +1785,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     state_changed: prevState !== this.state,
                     measuring: this.state === "down",
                     countIncreased: countIncreased,
-                    repDisallowed: false,
+                    repDisallowed: repDisallowed,
                     count: this.count
                 };
             }
@@ -2305,7 +2315,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                         landmarkHistory.push({ left_shoulder_x: lm[11].x });
                         if (landmarkHistory.length > 30) landmarkHistory.shift();
 
-                        const stateData = stateMachineInstance.update(angles, activeExercise, 0);
+                        const previewScoreData = calculateScore(angles, activeExercise, poseLabel, landmarkHistory, stateMachineInstance.state);
+                        const stateData = stateMachineInstance.update(angles, activeExercise, previewScoreData.total || 0, poseLabel);
                         const scoreData = calculateScore(angles, activeExercise, poseLabel, landmarkHistory, stateData.state);
                         const feedbackText = (poseLabel === "Bad") ? generateFeedback(angles, activeExercise, scoreData, stateData.state) : ((poseLabel === "Good" && stateData.state==="down") ? "좋아요. 그대로 유지해주세요" : "");
 
