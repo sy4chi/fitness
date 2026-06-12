@@ -873,7 +873,7 @@ async function requestCameraPermissionAndStart() {
     // iOS는 getUserMedia await 이후 사용자 제스처가 끊길 수 있어서, 카메라 요청 전에 TTS를 먼저 깨운다.
     if (typeof window.unlockTTSForIOS === "function") window.unlockTTSForIOS();
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      alert("이 브라우저에서 카메라 API를 사용할 수 없습니다. Chrome 최신 버전으로 접속해줘.");
+      alert("이 브라우저에서 카메라 API를 사용할 수 없습니다. Chrome 최신 버전으로 접속해주세요.");
       return;
     }
 
@@ -910,7 +910,7 @@ async function requestCameraPermissionAndStart() {
       }
     }
 
-    alert("카메라 권한은 허용됐지만 시작 함수를 찾지 못했습니다. 페이지를 새로고침 후 다시 눌러줘.");
+    alert("카메라 권한은 허용됐지만 시작 함수를 찾지 못했습니다. 페이지를 새로고침한 후 다시 눌러주세요.");
   } catch (err) {
     console.error("[Camera Permission Error]", err);
     alert("카메라 권한 요청 실패: " + (err && err.message ? err.message : err));
